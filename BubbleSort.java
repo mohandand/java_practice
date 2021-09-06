@@ -3,7 +3,7 @@ class BubbleSort {
 	public static void main(String []args) {
 		int n, i, j, swap;
 		Scanner in = new Scanner(System.in);
-		System.out.println("Plese Enter number of integers to sort:");
+		System.out.println("Plese Enter number of integers to sort in desending order:");
 		n = in.nextInt();
 		int array[] = new int[n];
 		System.out.println("Please Enter " + n + " integers");
