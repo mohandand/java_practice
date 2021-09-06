@@ -19,7 +19,7 @@ class BubbleSort {
 				}
 			}
 		}
-		System.out.println("After Sorting:");
+		System.out.println("After Sorting result is:");
 		for (i = 0; i < n; i++) 
 		      System.out.println(array[i]);
 	}
