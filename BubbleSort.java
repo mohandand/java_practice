@@ -6,7 +6,7 @@ class BubbleSort {
 		System.out.println("Plese Enter number of integers to sort in desending order:");
 		n = in.nextInt();
 		int array[] = new int[n];
-		System.out.println("Please Enter " + n + " integers");
+		System.out.println("Please Enter " + n + " integers to sort");
 		for (i = 0; i < n; i++) 
 		      array[i] = in.nextInt();
 		for (i = 0; i < ( n - 1 ); i++) {
