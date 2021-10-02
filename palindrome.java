@@ -4,7 +4,7 @@ import java.util.Scanner;
 class palindrome
 {
  
-// recursive function that returns the reverse of digits
+// recursive function that returns the reverse of digits to chek
 static int reverse(int input, int temp)
 {
     if (input == 0)
