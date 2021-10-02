@@ -10,7 +10,7 @@ static int reverse(int input, int temp)
     if (input == 0)
         return temp;
  
-    // reverse of a number
+    // reverse of a number using maths
     temp = (temp * 10) + (input % 10);
  
     return reverse(input / 10, temp);
