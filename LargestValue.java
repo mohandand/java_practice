@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
-public class LargestValue1 {
+public class LargestValue {
 
     public static void main(String[] args) throws FileNotFoundException {
         FileReader fileReader = new FileReader("input.txt");
