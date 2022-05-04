@@ -1,3 +1,8 @@
+/*   	           Team Details
+ Member1 : Name : Mohan Dandigam and  Netid: nj6956
+ Member2 : Name : G.NIKHIL CHANDRA REDDY  and Netid: AF3138
+*/
+
 import java.io.FileReader;
 import java.util.Scanner;
 
