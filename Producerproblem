@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <unistd.h>
 #include "buffer.h"
 #define TRUE 1
+
+typedef int buffer_item;
+#define BUFFER_SIZE 5
 
 // Below step is for creating Producer or Middleman Buffer
 buffer_item prodMidbuffer[BUFFER_SIZE]; 
@@ -77,13 +79,9 @@ Input Type: buffer_item
 Return Type:int
  **/
 int insert_item(buffer_item item) {
-	//If the buffer is full do not insert item
-	if(prodMidCounter == BUFFER_SIZE) {
-		// do nothing
-		sleep(2);
-	}
+
+    sem_wait(&empty); //Acquire  empty lock
 	pthread_mutex_lock(&mutex);//Acquire mutex lock
-	sem_wait(&empty); //Acquire  empty lock
 	//If the buffer is not full add item and increment the buffer counter
 	if(prodMidCounter< BUFFER_SIZE) {
 		prodMidbuffer[in] = item; //Insert the item in to the buffer
@@ -94,10 +92,9 @@ int insert_item(buffer_item item) {
 		display(prodMidbuffer,queue1,in ,out); //This method is called to display buffer elements
 
 	}
-
+    sem_post(&full); //Signal the semaphore as full
 	pthread_mutex_unlock(&mutex);  //Release mutex lock
-	sem_post(&full); //Signal the semaphore as full
-
+	
 }
 
 /**
@@ -107,14 +104,9 @@ Input Type: buffer_item
 Return Type:int
  **/
 int remove_item(buffer_item *item) {
-	//If the  buffer has no elements then there is nothing to remove.
-	if(prodMidCounter==0) {
-		//do nothing
-		sleep(2);
-	}
 
-	pthread_mutex_lock(&mutex); //Acquire mutex lock
 	sem_wait(&full); // Acquire the full lock
+    pthread_mutex_lock(&mutex); //Acquire mutex lock
 
 	// When the buffer is not empty remove the item and decrement the buffer counter.
 
@@ -130,8 +122,9 @@ int remove_item(buffer_item *item) {
 		display(prodMidbuffer,queue2,in,out); //This method is called to display buffer elements			
 	}
 
-	pthread_mutex_unlock(&mutex); //Release mutex lock
 	sem_post(&empty); //Signal sempahore as empty
+    pthread_mutex_unlock(&mutex); //Release mutex lock
+	
 }
 
 /**
@@ -141,13 +134,10 @@ Input Type: buffer_item
 Return Type:int
  **/
 int insert_item1(buffer_item item) {
-	//If the buffer is full do not insert item
-	if(midConsCounter == BUFFER_SIZE) {
-		// do nothing
-		sleep(2);
-	}
-	pthread_mutex_lock(&mutex1); //Acquire mutex lock
+
 	sem_wait(&empty1); //Acquire  empty lock
+    pthread_mutex_lock(&mutex1); //Acquire mutex lock
+	
 	//If the buffer is not full add item and increment buffer counter
 	if(midConsCounter< BUFFER_SIZE) {
 		midConsbuffer[in1] = item; //Insert the item in the buffer
@@ -157,8 +147,10 @@ int insert_item1(buffer_item item) {
 		char * queue3="Middleman/Consumer"; //Queue name
 		display(midConsbuffer,queue3,in1,out1); //This method is called to display buffer elements	
 	}
+
+    sem_post(&full1); ///Signal the semaphore as full
 	pthread_mutex_unlock(&mutex1); //Release mutex lock
-	sem_post(&full1); ///Signal the semaphore as full
+	
 }
 
 /**
@@ -168,14 +160,10 @@ Input Type: buffer_item
 Return Type:int
  **/
 int remove_item1(buffer_item *item) {
-	//If the  buffer has no elements then there is nothing to remove.
-	if(midConsCounter==0) {
-		//do nothing
-		sleep(2);
-	}
 
-	pthread_mutex_lock(&mutex1); //Acquire mutex lock
 	sem_wait(&full1); // Acquire the full lock
+    pthread_mutex_lock(&mutex1); //Acquire mutex lock
+	
 
 	// When the buffer is not empty remove the item and decrement the buffer counter
 
@@ -190,8 +178,10 @@ int remove_item1(buffer_item *item) {
 		char * queue4="Middleman/Consumer"; //Queue name
 		display(midConsbuffer,queue4,in1,out1); //This method is called to display buffer elements	
 	}
-	pthread_mutex_unlock(&mutex1); //Release mutex lock
+
 	sem_post(&empty1); //Signal sempahore as empty
+    pthread_mutex_unlock(&mutex1); //Release mutex lock
+	
 }
 
 /**
