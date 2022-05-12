@@ -29,7 +29,6 @@ public class AffineCaesarCipherAnyLanguage {
                 c = c + item;
             }
         }
-
         return c;
     }
 

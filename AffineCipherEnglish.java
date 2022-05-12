@@ -16,19 +16,18 @@ public class AffineCipherEnglish {
             return "";
         }
 
-        String c = "";
+        String cipheText = "";
         /*Below is the Main Logic to convert Plain Text to Cipher Text
           Based on Key values of a and b. Here we are making use of Encryption Formula which is (a x + b)
           and other calculations*/
         for (char item : plainText.toCharArray()) {
             if (item != ' ') {
-                c = c + (char) ((a * (item - 'A') + b) % 26 + 'A');
+                cipheText = cipheText + (char) ((a * (item - 'A') + b) % 26 + 'A');
             } else {
-                c = c + item;
+                cipheText = cipheText + item;
             }
         }
-
-        return c;
+        return cipheText;
     }
 
     public static String decryptCipherText(int a, int b, String cipher) {

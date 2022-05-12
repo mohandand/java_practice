@@ -1,12 +1,12 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;  
 
 public class AffineCipher {
-    // Below Method is for Encryption of the Input Text.
+
     public static String Encrypt(int a, int b, String text, String language) {
         int gcd = 1;
+        //Checking gcd is one or not for validating key value
         for(int i = 1; i <= a && i <= language.length(); i++)
         {
             if(a%i==0 && language.length()%i==0)
@@ -70,14 +70,11 @@ public class AffineCipher {
 
     public static void main(String[] args) {
         String pText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        Scanner sc= new Scanner(System.in);    //System.in is a standard input stream  
-        System.out.print("Enter  value of a- ");  
-        int a= sc.nextInt();  
-        System.out.print("Enter value of b- ");  
-        int b= sc.nextInt();  
-        //int a = 3, b = 20;
+        int a = 3, b = 20;
+
         try {
             String language = Files.readString(Path.of("language.txt"));
+            System.out.println("Text from File:"  + language);
             String c = Encrypt(a, b, pText.toUpperCase(), language);
             System.out.println(c);
     
